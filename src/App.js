@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import Button from './components/Button';
+import Input from './components/TextInput';
+
+import api from './api';
+import mock from './api/mock.json';
+
+import Routes from './Routes';
+
+import './app.css';
 
 function App() {
+  const [input, setInput] = useState('');
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api.get('/cards').then((response) => setCards(response.data.cards));
+  }, []);
+
+  const doSearchPokemon = () => {
+    api.get(`/cards?name=${input}`).then((response) => setCards(response.data.cards));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App">
+        <div className="image-wrapper">
+          <img src="https://pokemontcg.io/static/media/pokemon-minimalist.30bc8a16.pngg" alt="logo" />
+        </div>
+
+        <div className="search-wrapper">
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            labelText="Digite o nome do Pokemón"
+            name="txtPokemon"
+            placeholder="Digite o nome do Pokemón"
+          />
+          <Button onClick={doSearchPokemon} name="btn">Pesquisar</Button>
+        </div>
+      </div>
+      <hr />
+
+      <Routes cards={cards} />
+    </>
   );
 }
 
