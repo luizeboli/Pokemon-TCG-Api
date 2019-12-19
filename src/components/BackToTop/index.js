@@ -9,8 +9,8 @@ const StyledLink = styled.a`
   height: 50px;
   width: 50px;
   border-radius: 25px;
-  box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.75);
   transition: all 0.3s ease;
+  box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.50);
 
   i {
     border: solid black;
@@ -30,6 +30,7 @@ const StyledLink = styled.a`
 
   &:hover {
     transform: translateY(-5px);
+    box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75);
   }
 `;
 

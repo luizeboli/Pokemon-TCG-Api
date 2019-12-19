@@ -25,6 +25,10 @@ const actions = createActions({
 
 export const { cards } = actions;
 
+/** ********************************
+ * REDUCER
+ ******************************** */
+
 export const reducer = handleActions({
   [cards.fetchCards.request](state) {
     return state

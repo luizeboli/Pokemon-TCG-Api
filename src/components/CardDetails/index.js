@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledUl = styled.ul`
@@ -37,7 +38,7 @@ const StyledListItem = styled.li`
   display:flex;
 `;
 
-const CardList = ({ location: { state } }) => (
+const CardDetails = ({ location: { state } }) => (
   <StyledUl>
     <StyledListItem>
       <div>
@@ -86,4 +87,9 @@ const CardList = ({ location: { state } }) => (
   </StyledUl>
 );
 
-export default CardList;
+CardDetails.propTypes = {
+  location: PropTypes.objectOf(Object).isRequired,
+};
+
+
+export default CardDetails;

@@ -24,10 +24,16 @@ const StyledContainer = styled.div`
   .image-wrapper {
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     overflow: hidden;
     justify-content: center;
     background-color: #fff;
+
+    h1 {
+      font-weight: 300;
+      margin-top: 10px;
+    }
   }
 `;
 
@@ -46,7 +52,8 @@ const Header = ({ doSearchPokemon }) => {
     <StyledContainer>
       <div className="header-wrapper">
         <div className="image-wrapper">
-          <img src="https://pokemontcg.io/static/media/pokemon-minimalist.30bc8a16.pngg" alt="logo" />
+          <h1>PokeCardéx</h1>
+          <img src="https://pokemontcg.io/static/media/pokemon-minimalist.30bc8a16.png" alt="logo" />
         </div>
 
         <div className="search-wrapper">

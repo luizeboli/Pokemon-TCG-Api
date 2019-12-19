@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import BackToTop from './components/BackToTop';
 import Header from './components/Header';
+import PropTypes from 'prop-types';
 import RoutesContainer from './Routes';
 import { connect } from 'react-redux';
 import { cards as cardsActions } from './store/ducks/cards';
-
-import BackToTop from './components/BackToTop';
-
-import './app.css';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App({
   loading, cards, fetchCards,
@@ -38,6 +36,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchCards: cardsActions.fetchCards.request,
+};
+
+App.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  cards: PropTypes.objectOf(Array).isRequired,
+  fetchCards: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
