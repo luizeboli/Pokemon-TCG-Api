@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import BackToTop from './components/BackToTop';
 import Header from './components/Header';
+import Loader from './components/Loader';
 import PropTypes from 'prop-types';
 import RoutesContainer from './Routes';
 import { connect } from 'react-redux';
@@ -21,7 +22,7 @@ function App({
   return (
     <Router>
       <Header doSearchPokemon={doSearchPokemon} />
-      {loading && <p>Loading cards...</p>}
+      {loading && <Loader />}
       <RoutesContainer cards={cards} />
       <BackToTop />
     </Router>
