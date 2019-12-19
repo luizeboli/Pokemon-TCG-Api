@@ -3,20 +3,19 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
 import RoutesContainer from './Routes';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchCards, fetchCardByPokeName } from './store/ducks/cards';
+import { actions as cardActions } from './store/ducks/cards';
 
 import './app.css';
 
 function App({
-  loading, cards, fetchCards, fetchCardByPokeName,
+  loading, cards, fetchCards,
 }) {
   useEffect(() => {
     fetchCards();
   }, []);
 
   const doSearchPokemon = (input) => {
-    fetchCardByPokeName(input);
+    fetchCards(input);
   };
 
   return (
@@ -34,6 +33,8 @@ const mapStateToProps = (state) => ({
   cards: state.cards,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchCards, fetchCardByPokeName }, dispatch);
+const mapDispatchToProps = {
+  fetchCards: cardActions.cards.fetchCards.request,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

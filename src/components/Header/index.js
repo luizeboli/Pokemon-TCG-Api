@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Button from '../Button';
 import Input from '../TextInput';
@@ -31,8 +31,9 @@ const StyledContainer = styled.div`
   }
 `;
 
-const Header = ({ doSearchPokemon, history }) => {
+const Header = ({ doSearchPokemon }) => {
   const [input, setInput] = useState('');
+  const history = useHistory();
 
   const handleSearch = () => {
     if (input) {
@@ -68,7 +69,6 @@ const Header = ({ doSearchPokemon, history }) => {
 
 Header.propTypes = {
   doSearchPokemon: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(Object).isRequired,
 };
 
-export default withRouter(Header);
+export default Header;
