@@ -1,5 +1,4 @@
 import React from 'react';
-import CardListItem from '../CardListItem';
 import styled from 'styled-components';
 
 const StyledUl = styled.ul`
