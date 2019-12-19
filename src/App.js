@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
 import RoutesContainer from './Routes';
-
-import api from './api';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchCards, fetchCardByPokeName } from './redux/actions/fetchCards';
 
 import './app.css';
 
-function App() {
-  const [cards, setCards] = useState([]);
-
+function App({ cards, fetchCards, fetchCardByPokeName }) {
   useEffect(() => {
-    api.get('/cards').then((response) => setCards(response.data.cards));
+    fetchCards();
   }, []);
 
   const doSearchPokemon = (input) => {
-    api.get(`/cards?name=${input}`).then((response) => setCards(response.data.cards));
+    fetchCardByPokeName(input);
   };
 
   return (
@@ -26,4 +25,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  cards: state.cards,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchCards, fetchCardByPokeName }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

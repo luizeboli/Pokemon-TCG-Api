@@ -29,6 +29,8 @@ const Header = ({ doSearchPokemon, history }) => {
             labelText="Digite o nome do Pokemón"
             name="txtPokemon"
             placeholder="Digite o nome do Pokemón"
+            type="search"
+            autoComplete="off"
           />
           <Button onClick={handleSearch} name="btn">Pesquisar</Button>
         </div>

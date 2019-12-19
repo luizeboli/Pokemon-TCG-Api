@@ -76,7 +76,7 @@ const StyledInput = styled.input`
 `;
 
 const TextInput = ({
-  labelText, name, placeholder, value, onChange,
+  labelText, autoComplete, name, placeholder, type, value, onChange,
 }) => {
   const [active, setActive] = useState(false);
 
@@ -84,7 +84,8 @@ const TextInput = ({
     <StyledContainer className={active || value ? 'isActive' : ''}>
       <label htmlFor={name}>{labelText}</label>
       <StyledInput
-        type="text"
+        autoComplete={autoComplete}
+        type={type}
         name={name}
         placeholder={placeholder}
         value={value}
@@ -98,14 +99,18 @@ const TextInput = ({
 };
 
 TextInput.defaultProps = {
+  autoComplete: 'on',
   placeholder: '',
+  type: 'text',
 };
 
 TextInput.propTypes = {
   labelText: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
 
