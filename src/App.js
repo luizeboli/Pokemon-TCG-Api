@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Button from './components/Button';
-import Input from './components/TextInput';
 
 import api from './api';
 import mock from './api/mock.json';
 
-import Routes from './Routes';
+import Button from './components/Button';
+import Input from './components/TextInput';
+
+import RoutesContainer from './Routes';
 
 import './app.css';
 
@@ -20,7 +21,6 @@ function App() {
   const doSearchPokemon = () => {
     api.get(`/cards?name=${input}`).then((response) => setCards(response.data.cards));
   };
-
   return (
     <>
       <div className="App">
@@ -41,7 +41,7 @@ function App() {
       </div>
       <hr />
 
-      <Routes cards={cards} />
+      <RoutesContainer cards={cards} />
     </>
   );
 }

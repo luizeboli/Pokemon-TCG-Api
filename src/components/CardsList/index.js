@@ -10,11 +10,15 @@ const StyledContainer = styled.div`
 
   a {    
     margin: 15px;
+  }
+
+  img { 
     transition: all 0.3s ease;
   }
 
-  a:hover {    
-    transform: translateY(-10px);
+  img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.3);  
   }
 `;
 
