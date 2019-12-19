@@ -1,82 +1,52 @@
+import { fromJS, List } from 'immutable';
 import { createActions, handleActions } from 'redux-actions';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../api';
 
-
-/** ********************************
- * TYPES
- ******************************** */
-// export const Types = {
-//   FETCH_CARDS_REQUEST: 'FETCH_CARDS_REQUEST',
-//   FETCH_CARDS_PENDING: 'FETCH_CARDS_PENDING',
-//   FETCH_CARDS_SUCCESS: 'FETCH_CARDS_SUCCESS',
-//   FETCH_CARDS_ERROR: 'FETCH_CARDS_ERROR',
-// };
-
 /** ********************************
  * STATE
  ******************************** */
-const INITIAL_STATE = {
+const INITIAL_STATE = fromJS({
   cards: [],
   loading: false,
   error: false,
-};
+});
 
 /** ********************************
  * ACTIONS
  ******************************** */
 const requestPattern = { REQUEST: undefined, SUCCESS: undefined, FAILURE: undefined };
 
-export const actions = createActions({
+const actions = createActions({
   cards: {
     FETCH_CARDS: requestPattern,
   },
 });
 
+export const { cards } = actions;
+
 export const reducer = handleActions({
-  [actions.cards.fetchCards.request](state) {
-    return {
-      ...state,
-      loading: true,
-      error: false,
-    };
+  [cards.fetchCards.request](state) {
+    return state
+      .set('loading', true)
+      .set('error', false);
   },
-  [actions.cards.fetchCards.success](state, { payload }) {
-    return {
-      ...state,
-      cards: payload,
-      loading: false,
-      error: false,
-    };
+  [cards.fetchCards.success](state, { payload }) {
+    return state
+      .set('cards', List(payload))
+      .set('loading', false)
+      .set('error', false);
   },
-  [actions.cards.fetchCards.failure]() {
-    return {
-      cards: [],
-      loading: false,
-      error: true,
-    };
+  [cards.fetchCards.failure](state) {
+    return state
+      .set('cards', [])
+      .set('loading', false)
+      .set('error', true);
   },
 }, INITIAL_STATE);
 
-// export const ActionCreators = {
-//   fetchCardsRequest: (payload) => ({
-//     type: Types.FETCH_CARDS_REQUEST,
-//     payload,
-//   }),
-
-//   fetchCardsSuccess: (payload) => ({
-//     type: Types.FETCH_CARDS_SUCCESS,
-//     payload,
-//   }),
-
-//   fetchCardsFailure: (payload) => ({
-//     type: Types.FETCH_CARDS_ERROR,
-//     payload,
-//   }),
-// };
-
 /** ********************************
- * (SAGA)
+ * SAGA
  ******************************** */
 
 function* fetchCards(action) {
@@ -87,43 +57,12 @@ function* fetchCards(action) {
     } else {
       response = yield call(api.get, '/cards');
     }
-    yield put(actions.cards.fetchCards.success(response.data.cards));
+    yield put(cards.fetchCards.success(response.data.cards));
   } catch (error) {
-    yield put(actions.cards.fetchCards.failure(error));
+    yield put(cards.fetchCards.failure(error));
   }
 }
 
 export function* saga() {
-  yield takeLatest(actions.cards.fetchCards.request, fetchCards);
+  yield takeLatest(cards.fetchCards.request, fetchCards);
 }
-
-/** ********************************
- * REDUCER
- ******************************** */
-// export const reducer = (state = INITAL_STATE, action) => {
-//   switch (action.type) {
-//   case Types.FETCH_CARDS_REQUEST:
-//     return {
-//       ...state,
-//       loading: true,
-//       error: false,
-//     };
-//   case Types.FETCH_CARDS_SUCCESS:
-//     return {
-//       ...state,
-//       cards: action.payload,
-//       loading: false,
-//       error: false,
-//     };
-
-//   case Types.FETCH_CARDS_ERROR:
-//     return {
-//       cards: [],
-//       loading: false,
-//       error: true,
-//     };
-
-//   default:
-//     return state;
-//   }
-// };
