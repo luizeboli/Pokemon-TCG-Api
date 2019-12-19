@@ -4,11 +4,13 @@ import Header from './components/Header';
 import RoutesContainer from './Routes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchCards, fetchCardByPokeName } from './redux/actions/fetchCards';
+import { fetchCards, fetchCardByPokeName } from './store/ducks/cards';
 
 import './app.css';
 
-function App({ cards, fetchCards, fetchCardByPokeName }) {
+function App({
+  loading, cards, fetchCards, fetchCardByPokeName,
+}) {
   useEffect(() => {
     fetchCards();
   }, []);
@@ -20,12 +22,15 @@ function App({ cards, fetchCards, fetchCardByPokeName }) {
   return (
     <Router>
       <Header doSearchPokemon={doSearchPokemon} />
+      {loading && <p>Loading cards...</p>}
       <RoutesContainer cards={cards} />
     </Router>
   );
 }
 
 const mapStateToProps = (state) => ({
+  loading: state.loading,
+  error: state.error,
   cards: state.cards,
 });
 

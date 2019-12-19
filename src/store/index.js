@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import cardsReducer from '../reducers/cardsReducer';
+import { reducer as cardsReducer } from './ducks/cards';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
