@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledLink = styled.a`
+const StyledButton = styled.button`
+  cursor: pointer;
+  outline: none;
+  border: none;
   position: fixed;
   bottom: 20px;
   right: 30px;
@@ -14,6 +17,7 @@ const StyledLink = styled.a`
 
   i {
     border: solid black;
+    border-radius: 5px;
     border-width: 0 4px 4px 0;
     display: inline-block;
     padding: 3px;
@@ -34,10 +38,35 @@ const StyledLink = styled.a`
   }
 `;
 
-const BackToTop = () => (
-  <StyledLink href="#">
-    <i className="arrowUp" />
-  </StyledLink>
-);
+const BackToTop = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    document.body.scrollTop = 0; // Opera
+    document.documentElement.scrollTop = 0; // Others
+  };
+
+  return (
+    <>
+      {visible
+    && (
+      <StyledButton onClick={scrollToTop} href="#">
+        <i className="arrowUp" />
+      </StyledButton>
+    )}
+    </>
+
+  );
+};
 
 export default BackToTop;
