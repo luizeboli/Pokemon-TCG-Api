@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import Button from '../Button';
 import Input from '../TextInput';
+import Pokedex from '../../assets/pokedex_icon.svg';
 
 const StyledContainer = styled.div`  
   .header-wrapper {
@@ -34,6 +35,17 @@ const StyledContainer = styled.div`
       font-weight: 300;
       margin-top: 10px;
     }
+
+    .pokedex-wrapper {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin: 10px;
+        height: 50px;
+        width: 50px;
+      }
+    }
   }
 `;
 
@@ -52,7 +64,11 @@ const Header = ({ doSearchPokemon }) => {
     <StyledContainer>
       <div className="header-wrapper">
         <div className="image-wrapper">
-          <h1>PokeCardéx</h1>
+          <div className="pokedex-wrapper">
+            <h1>PokeCardéx</h1>
+            <img src={Pokedex} alt="pokedex" className="pokedex" />
+          </div>
+
           <img src="https://pokemontcg.io/static/media/pokemon-minimalist.30bc8a16.png" alt="logo" />
         </div>
 
