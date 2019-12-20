@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-const StyledLoader = styled.div`
+const StyledLoader = styled.div`  
   position: fixed;
   display: flex; 
   flex-direction: column;
@@ -13,54 +13,70 @@ const StyledLoader = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.85);
   z-index: 2;
   cursor: pointer;
 
-  h2 {
-    color: white;
-  }
-
   .pokeball {
-  width: 100px;
-  height: 100px;
-  background-color: #fff;
-  border-radius: 50% ;
-  overflow: hidden;
-  border: 3px solid;
-  animation: frames .8s  linear 0s infinite;
+    position: relative;
+    top: -200px;
+    width: 200px;
+    height: 200px;
+    background: #fff;
+    border: 10px solid #000;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: inset -10px 10px 0 10px #ccc;
+    animation: fall .25s ease-in-out forwards,
+              shake 1.25s cubic-bezier(.36,.07,.19,.97) infinite;
   }
-
-  .pokeball:after {
-  content: '';
-  position: absolute;
-  width: 100px;
-  height: 50px;
-  background-color: red;
-  border-bottom: 4px solid;
-  top: -4px
+  .pokeball::before,
+  .pokeball::after {
+    content:"";
+    position: absolute;
   }
-
-  .pokeball:before {
-  content: '';
-  position: absolute;
-  background-color: #fff;
-  width: 10px;
-  height:10px;
-  border: 4px solid;
-  border-radius: 50%;
-  bottom: 37px;
-  right: 37px;
-  z-index: 1;
+  .pokeball::before {
+    background: red;
+    width: 100%;
+    height: 50%;
   }
-
-  @keyframes frames {
-  0% {
-    transform: rotate(0deg);
+  .pokeball::after {
+    top: calc(50% - 10px);
+    width: 100%;
+    height: 13px;
+    background: #000;
   }
-  100%{
-    transform: rotate(360deg);
+  .pokeball__button {
+    position: absolute;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    width: 60px;
+    height: 60px;
+    background: #7f8c8d;
+    border: 10px solid #fff;
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 0 0 10px black;
+    animation: blink .5s alternate infinite;
   }
+  
+  @keyframes blink {
+    from { background: #eee;}
+    to { background: #e74c3c; }
+  }
+  @keyframes shake {
+    0 { transform: translate(0, 0) rotate(0); }
+    20% { transform: translate(-10px, 0) rotate(-20deg); }
+    30% { transform: translate(10px, 0) rotate(20deg); }
+    50% { transform: translate(-10px, 0) rotate(-10deg); }
+    60% { transform: translate(10px, 0) rotate(10deg); }
+    100% { transform: translate(0, 0) rotate(0); }
+  }
+  @keyframes fall {
+    0% { top: -200px }
+    60% { top: 0 }
+    80% { top: -20px }
+    100% { top: 0 }
   }
 `;
 
@@ -74,8 +90,9 @@ const Loader = () => {
   document.documentElement.style.overflow = 'hidden';
   return (
     <StyledLoader>
-      <div className="pokeball" />
-      <h2>Loading...</h2>
+      <div className="pokeball">
+        <div className="pokeball__button" />
+      </div>
     </StyledLoader>
   );
 };
