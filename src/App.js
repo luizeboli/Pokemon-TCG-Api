@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import BackToTop from './components/BackToTop';
 import Header from './components/Header';
 import Loader from './components/Loader';
-import PropTypes from 'prop-types';
 import RoutesContainer from './Routes';
-import { connect } from 'react-redux';
 import { cards as cardsActions } from './store/ducks/cards';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 function App({
   loading, cards, fetchCards,

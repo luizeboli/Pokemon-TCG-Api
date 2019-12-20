@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Pokedex from '../../assets/pokedex_icon.svg';
 import Button from '../Button';
 import Input from '../TextInput';
-import Pokedex from '../../assets/pokedex_icon.svg';
 
 const StyledContainer = styled.div`  
   .header-wrapper {

@@ -1,6 +1,8 @@
 import { fromJS, List } from 'immutable';
 import { createActions, handleActions } from 'redux-actions';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import {
+  call, delay, put, takeLatest,
+} from 'redux-saga/effects';
 import api from '../../api';
 
 /** ********************************
@@ -61,6 +63,7 @@ function* fetchCards(action) {
     } else {
       response = yield call(api.get, '/cards');
     }
+    yield delay(1000);
     yield put(cards.fetchCards.success(response.data.cards));
   } catch (error) {
     yield put(cards.fetchCards.failure(error));
