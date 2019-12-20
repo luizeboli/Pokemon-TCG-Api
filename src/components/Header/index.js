@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
@@ -51,7 +51,12 @@ const StyledContainer = styled.div`
 
 const Header = ({ doSearchPokemon }) => {
   const [input, setInput] = useState('');
+  const [backBtn, setBackBtn] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    if (history.location.pathname !== '/') setBackBtn(true); else setBackBtn(false);
+  }, [history.location]);
 
   const handleSearch = () => {
     if (input) {

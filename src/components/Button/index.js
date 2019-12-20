@@ -3,49 +3,26 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  position: relative;
-  padding: 1em 1.5em;
-  border: none;
-  background-color: transparent;
   cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  background: #2196F3;
+  padding: 20px;
+  border-radius: 50px;
+  display: inline-block;
+  border: none;
   outline: none;
+  transition: all 0.4s ease 0s;
   font-size: 16px;
-  margin: 1em 0.8em;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  line-spacing: 2px;
+  margin: 1em 0 1em 0.8em;
 
-  color: white;
-
-  &::after, &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 30%;
-    height: 30%;
-    border: 2px solid;
-    transition: all 0.4s ease;
-    border-radius: 4px;
-  }
-
-  &::after {
-    bottom: 0;
-    right: 0;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-bottom-color: white;
-    border-right-color: white;
-  }
-
-  &::before {
-    top: 0;
-    left: 0;
-    border-bottom-color: transparent;
-    border-right-color: transparent;
-    border-top-color: white;
-    border-left-color: white;
-  }
-  
-  &:hover:after, &:hover:before {
-    width: 100%;
-    height: 100%;
+  &:hover {
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
   }
 `;
 

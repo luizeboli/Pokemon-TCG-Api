@@ -8,7 +8,7 @@ const StyledButton = styled.button`
   position: fixed;
   bottom: 20px;
   right: 30px;
-  background-color: #ffb01f;
+  background-color: #2196F3;
   height: 50px;
   width: 50px;
   border-radius: 25px;

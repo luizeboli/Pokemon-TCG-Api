@@ -15,7 +15,7 @@ const StyledContainer = styled.div`
     position: absolute;
     top: 24px;
     left: 16px;
-    font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 12px;
     font-weight: 600;
     line-height: 24px;
@@ -54,10 +54,8 @@ const StyledInput = styled.input`
   padding: 0px 16px;
   border: none;
   border-radius: 4px;
-  font-family: "Gotham SSm A", "Gotham SSm B", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
-  font-weight: 400;
-  line-height: normal;
   background-color: transparent;
   color: #282828;
   outline: none;
@@ -72,6 +70,11 @@ const StyledInput = styled.input`
 
   &::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.8);
+  }
+
+  &::-webkit-search-cancel-button {
+    cursor: pointer;
+    font-size: 16px;
   }
 `;
 
