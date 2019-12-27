@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -39,52 +40,58 @@ const StyledListItem = styled.li`
 `;
 
 const CardDetails = ({ location: { state } }) => (
-  <StyledUl>
-    <StyledListItem>
-      <div>
-        <img src={state.card.imageUrl} alt={state.card.name} />
-      </div>
-      <StyledContent>
-        <StyledHeader>
-          <h3>
-            {`${state.card.number}: `}
-            {state.card.name}
-            <span>{` ${state.card.supertype} - ${state.card.subtype}`}</span>
-            <span>{`HP: ${state.card.hp}`}</span>
-          </h3>
-        </StyledHeader>
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
+    <StyledUl>
+      <StyledListItem>
+        <div>
+          <img src={state.card.imageUrl} alt={state.card.name} />
+        </div>
+        <StyledContent>
+          <StyledHeader>
+            <h3>
+              {`${state.card.number}: `}
+              {state.card.name}
+              <span>{` ${state.card.supertype} - ${state.card.subtype}`}</span>
+              <span>{`HP: ${state.card.hp}`}</span>
+            </h3>
+          </StyledHeader>
 
-        <ul>
-          <h4>Rules:</h4>
-          {state.card.text?.map((text) => <li key={text}>{text}</li>)}
-        </ul>
+          <ul>
+            <h4>Rules:</h4>
+            {state.card.text?.map((text) => <li key={text}>{text}</li>)}
+          </ul>
 
-        <ul>
-          <h4>Types:</h4>
-          {state.card.types?.map((type) => <li key={type}>{type}</li>)}
-        </ul>
+          <ul>
+            <h4>Types:</h4>
+            {state.card.types?.map((type) => <li key={type}>{type}</li>)}
+          </ul>
 
-        <ul>
-          <h4>Attacks:</h4>
-          {state.card.attacks?.map((attack) => (
-            <li key={attack.name}>
-              {attack.name}
-              <ul>
-                <li>
-                  {attack.text}
-                </li>
-              </ul>
-            </li>
-          ))}
-        </ul>
+          <ul>
+            <h4>Attacks:</h4>
+            {state.card.attacks?.map((attack) => (
+              <li key={attack.name}>
+                {attack.name}
+                <ul>
+                  <li>
+                    {attack.text}
+                  </li>
+                </ul>
+              </li>
+            ))}
+          </ul>
 
-        <ul>
-          <h4>Weakness:</h4>
-          {state.card.weaknesses?.map((weak) => <li key={weak.type}>{`${weak.type} ${weak.value}`}</li>)}
-        </ul>
-      </StyledContent>
-    </StyledListItem>
-  </StyledUl>
+          <ul>
+            <h4>Weakness:</h4>
+            {state.card.weaknesses?.map((weak) => <li key={weak.type}>{`${weak.type} ${weak.value}`}</li>)}
+          </ul>
+        </StyledContent>
+      </StyledListItem>
+    </StyledUl>
+  </motion.div>
 );
 
 CardDetails.propTypes = {

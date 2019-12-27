@@ -50,12 +50,7 @@ const StyledContainer = styled.div`
 
 const Header = ({ doSearchPokemon }) => {
   const [input, setInput] = useState('');
-  const [backBtn, setBackBtn] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    if (history.location.pathname !== '/') setBackBtn(true); else setBackBtn(false);
-  }, [history.location]);
 
   const handleSearch = () => {
     if (input) {
@@ -67,6 +62,8 @@ const Header = ({ doSearchPokemon }) => {
   return (
     <StyledContainer>
       <div className="header-wrapper">
+        <button type="button" onClick={() => history.push('/')}>Clique</button>
+
         <div className="image-wrapper">
           <div className="pokedex-wrapper">
             <h1>PokeCardéx</h1>
