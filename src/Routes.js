@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import CardDetails from './components/CardDetails';
 import CardsList from './components/CardsList';
-import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
 
 const RoutesContainer = ({ cards }) => (
   <>
@@ -15,7 +15,7 @@ const RoutesContainer = ({ cards }) => (
 );
 
 RoutesContainer.propTypes = {
-  cards: PropTypes.objectOf(Array).isRequired,
+  cards: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default RoutesContainer;

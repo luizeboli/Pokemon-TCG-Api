@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 import BackToTop from './components/BackToTop';
 import Header from './components/Header';
 import Loader from './components/Loader';
 import RoutesContainer from './Routes';
-import { cards as cardsActions } from './store/ducks/cards';
+import {
+  cards as cardsActions, makeSelectLoading, makeSelectCards, makeSelectError,
+} from './store/ducks/cards';
 import GlobalStyle from './styles/global';
 
 
@@ -24,18 +27,19 @@ function App({
   return (
     <Router>
       <GlobalStyle />
-      <Header doSearchPokemon={doSearchPokemon} />
       {loading && <Loader />}
+
+      <Header doSearchPokemon={doSearchPokemon} />
       <RoutesContainer cards={cards} />
       <BackToTop />
     </Router>
   );
 }
 
-const mapStateToProps = (state) => ({
-  loading: state.get('loading'),
-  error: state.get('error'),
-  cards: state.get('cards'),
+const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading,
+  error: makeSelectError,
+  cards: makeSelectCards,
 });
 
 const mapDispatchToProps = {
@@ -44,7 +48,7 @@ const mapDispatchToProps = {
 
 App.propTypes = {
   loading: PropTypes.bool.isRequired,
-  cards: PropTypes.objectOf(Array).isRequired,
+  cards: PropTypes.arrayOf(Object).isRequired,
   fetchCards: PropTypes.func.isRequired,
 };
 

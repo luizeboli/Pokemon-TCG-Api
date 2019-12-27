@@ -3,6 +3,7 @@ import { createActions, handleActions } from 'redux-actions';
 import {
   call, delay, put, takeLatest,
 } from 'redux-saga/effects';
+import { createSelector } from 'reselect';
 import api from '../../api';
 
 /** ********************************
@@ -22,6 +23,7 @@ const requestPattern = { REQUEST: undefined, SUCCESS: undefined, FAILURE: undefi
 const actions = createActions({
   cards: {
     FETCH_CARDS: requestPattern,
+    RESELECT_TEST: undefined,
   },
 });
 
@@ -73,3 +75,11 @@ function* fetchCards(action) {
 export function* saga() {
   yield takeLatest(cards.fetchCards.request, fetchCards);
 }
+
+/** ********************************
+ * SELECTORS
+ ******************************** */
+
+export const makeSelectCards = createSelector((state) => state.get('cards'), (substate) => substate.toJS());
+export const makeSelectLoading = createSelector((state) => state.get('loading'), (bool) => bool);
+export const makeSelectError = createSelector((state) => state.get('error'), (bool) => bool);
