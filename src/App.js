@@ -7,6 +7,8 @@ import Header from './components/Header';
 import Loader from './components/Loader';
 import RoutesContainer from './Routes';
 import { cards as cardsActions } from './store/ducks/cards';
+import GlobalStyle from './styles/global';
+
 
 function App({
   loading, cards, fetchCards,
@@ -21,6 +23,7 @@ function App({
 
   return (
     <Router>
+      <GlobalStyle />
       <Header doSearchPokemon={doSearchPokemon} />
       {loading && <Loader />}
       <RoutesContainer cards={cards} />
