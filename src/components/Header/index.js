@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -62,7 +62,6 @@ const Header = ({ doSearchPokemon }) => {
   return (
     <StyledContainer>
       <div className="header-wrapper">
-        <button type="button" onClick={() => history.push('/')}>Clique</button>
 
         <div className="image-wrapper">
           <div className="pokedex-wrapper">

@@ -23,7 +23,6 @@ const requestPattern = { REQUEST: undefined, SUCCESS: undefined, FAILURE: undefi
 const actions = createActions({
   cards: {
     FETCH_CARDS: requestPattern,
-    RESELECT_TEST: undefined,
   },
 });
 
