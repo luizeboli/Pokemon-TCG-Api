@@ -24,24 +24,29 @@ Aplicação desenvolvida em ReactJS consumindo a API https://pokemontcg.io/
   - [Fluxo de dados](#fluxo-de-dados)
 - [Duck Pattern](#duck-pattern)
 - [Bibliotecas utilizadas](#bibliotecas-utilizadas)
-  - [Immutable](#immutable)
   - [Redux](#redux)
   - [React Redux](#react-redux)
   - [Redux Actions](#redux-actions)
   - [Redux Thunk](#redux-thunk)
   - [Redux Saga](#redux-saga)
+  - [Immutable](#immutable)
   - [Reselect](#reselect)
 - [Implementando o projeto](#implementando-o-projeto)
   - [Redux Starter-kit](#redux-starter-kit)
-  - [Efetuando requisições assíncronas (Redux-Thunk)](#efetuando-requisi%c3%a7%c3%b5es-ass%c3%adncronas-redux-thunk)
+  - [Requisições assíncronas com Redux-Thunk](#requisi%c3%a7%c3%b5es-ass%c3%adncronas-com-redux-thunk)
   - [Unindo actions, types e reducers (Duck Pattern)](#unindo-actions-types-e-reducers-duck-pattern)
   - [Simplificando as actions e reducers](#simplificando-as-actions-e-reducers)
   - [Outro exemplo de middleware (Redux Saga)](#outro-exemplo-de-middleware-redux-saga)
-  - [Transformando o estado em um objeto imutável](#transformando-o-estado-em-um-objeto-imut%c3%a1vel)
+  - [Imutabilidade com ImmutableJS no Redux](#imutabilidade-com-immutablejs-no-redux)
+  - [Adicionando selectors memoizados](#adicionando-selectors-memoizados)
+- [Material para estudo e referências](#material-para-estudo-e-refer%c3%aancias)
+- [Melhorias (TODO)](#melhorias-todo)
 
 # Introdução
 
 Essa aplicação foi desenvolvida com o intuito de explicar algumas bibliotecas utilizadas juntamente com o Framework ReactJS, baseando-se na arquitetura flux.
+
+É recomendável acompanhar as explicações junto com o código/commits para melhor entendimento da correlação das partes do projeto, pois por motivos de otimização usaremos apenas os trechos pertinentes ao que for explicado.
 
 > **Nota**: Existem diferentes maneiras de implementação para as bibliotecas deste projeto, e com a constante atualização do core do React, eventualmente algumas podem se tornar (*ou já são*) desnecessárias. Porém, a escolha foi baseada em um cenário específico, e, convenhamos, conhecimento nunca é demais :smiley: :v:
 
@@ -49,7 +54,7 @@ Essa aplicação foi desenvolvida com o intuito de explicar algumas bibliotecas 
 
 Antes de conhecermos as bibliotecas, precisamos entender do quê foram derivadas.
 
-Flux é um padrão/arquitetura de código trazido pelo Facebook para desenvolvimento de aplicações front-end em JS, com o objetivo de facilitar a maneira em que os dados são gerenciados. O conceito mais relevante desta arquitetura é que há um fluxo único de dados (*one-way data binding*) e apenas o **store** (veremos à frente) fica responsável por manipular o estado da aplicação e prover para os componentes.
+Flux é um padrão/arquitetura de código trazido pelo Facebook para desenvolvimento de aplicações front-end em JS, com o objetivo de facilitar a maneira em que os dados são gerenciados. O conceito mais relevante desta arquitetura é que há um fluxo único de dados (*one-way data binding*) e apenas o **store** (veremos à frente) fica responsável por manipular e prover o estado da aplicação.
 
 ## Elementos do Flux
 
@@ -111,7 +116,9 @@ Podemos exemplificar os elementos descritos acima em um diagrama descrevendo o f
 
 A estrutura convencional das aplicações com redux consiste em separar em arquivos individuais o reducer, as actions e o types. Se pensarmos em pequenas aplicações não há problemas, porém se precisarmos escalar vários módulos, teremos dificuldades em lidar com a quantidade de arquivos e pastas.
 
-Então surgiu o padrão Duck, que se resume a unir reducers, actions e types em um único arquivo, claro que por módulos.
+Então surgiu o padrão Duck, que se resume a unir reducers, actions e types em um único arquivo, claro que por módulos, chamados "ducks". 
+
+> *Curiosidade: o nome "ducks" foi escolhido em referência a pronúncia da última silaba da palavra "redux".*
 
 De acordo com a proposta dos Ducks, um módulo DEVE:
 
@@ -134,16 +141,6 @@ As bibliotecas são:
 - [Reselect](https://github.com/reduxjs/reselect "GitHub")
 
 Existem outras bibliotecas no projeto, como a styled-components, porém como o foco é explicar a arquitetura flux, essas serão deixadas de fora.
-
-## Immutable
-
-Essa é outra biblioteca criada pela equipe do Facebook, com objetivo de trabalhar com estruturas imutáveis. Sabemos que no JavaScript, arrays, objetos e funções são passados por referência, e não por valor (de maneira simplificada), o que pode gerar problemas e efeitos colaterais indesejados na aplicação.
-
-O Gif abaixo demonstra a diferença entre passar parâmetros por valor e referência.
-
-![gif_reference_value](https://user-images.githubusercontent.com/13091635/71738437-5e645700-2e35-11ea-97bb-dfacbaa597e4.gif)
-
-Usaremos o Immutable para garantir que nosso estado seja imutável.
 
 ## Redux
 
@@ -205,7 +202,31 @@ Assim como o redux-thunk, essa biblioteca também é um middleware usado para tr
 
 Podemos usar sagas e os *saga-effects* quando precisamos controlar os efeitos colaterais de uma forma mais minuciosa, como por exemplo uma task que precisa rodar em background independente de ações do usuário, tasks que dependem uma da outra, fluxos extensos e que precisam aguardar condições específicas para seguirem ou até mesmo cancelar requisições que não são mais necessárias.
 
+## Immutable
+
+Essa é outra biblioteca criada pela equipe do Facebook, com objetivo de trabalhar com estruturas imutáveis. Sabemos que no JavaScript, arrays, objetos e funções são passados por referência, e não por valor (de maneira simplificada), o que pode gerar problemas e efeitos colaterais indesejados na aplicação.
+
+O Gif abaixo demonstra a diferença entre passar parâmetros por valor e referência.
+
+![gif_reference_value](https://user-images.githubusercontent.com/13091635/71738437-5e645700-2e35-11ea-97bb-dfacbaa597e4.gif)
+
+Usaremos o Immutable para garantir que nosso estado seja imutável.
+
 ## Reselect
+
+Apesar de não fazer parte dos conceitos principais do redux, é sugerido como boa prática pela sua equipe o uso de selectors para obter apenas as partes necessárias do estado. O selector é uma função que recebe o estado e então retorna apenas um pedaço dele. É usado também para abstrair os cálculos da camada do componente (como por exemplo no método `mapStateToProps`). 
+
+Dada a definição do selector, não precisamos de uma biblioteca para isso, exemplo de um selector simples para obter uma lista de usuários do store:
+
+````JavaScript
+const usersSelector = (state) => state.users;
+````
+
+O benefício de se utilizar o reselect está na possibilidade de criar selectors memoizados de forma simplificada.
+
+Nos baseando no exemplo acima, sempre que nosso estado for alterado, independente se a propriedade users mudar ou não, o selector é executado novamente. Nesse caso não sofreremos por isso, mas aplicações maiores que envolvem grandes cálculos podem ter a performance afetada.
+
+O selector memoizado armazena a entrada e a saída, se a função for chamada novamente com o mesmo input, o selector não efetua o cálculo e apenas retorna o resultado armazenado.
 
 # Implementando o projeto
 
@@ -363,7 +384,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 Se nossa aplicação fosse síncrona, estaria tudo pronto para funcionar: temos nosso store para armazenar o estado, as actions e o reducer para manipular o estado baseado nos action types, e por fim podemos mapear o estado e as actions para os componentes. Porém, como dependemos de dados vindos de uma API, precisamos tratar essas requisições usando um middleware do redux.
 
-## Efetuando requisições assíncronas (Redux-Thunk)
+## Requisições assíncronas com Redux-Thunk
 
 Para usar um middleware, precisamos configurar o store. Voltando ao arquivo `src\store\index.js`, efetuamos as alterações:
 
@@ -714,6 +735,152 @@ export default store;
 
 Não precisamos alterar nosso componente que deve continuar funcionando.
 
-## Transformando o estado em um objeto imutável
+O commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/3547fff41032cd771953d5a878879c583a23504d contém o código completo desta etapa.'
 
-// TODO: Paginação; Request pela rota; 404 Page
+## Imutabilidade com ImmutableJS no Redux
+
+A imutabilidade é um requisito do redux e a maioria dos problemas que podem ocorrer por termos objetos mutáveis se dá pelo shallow check que o react-redux executa para determinar se um componente deve ser renderizado.
+
+Quando alteramos o estado, o shallow check usado pelo connect do react-redux verifica se o estado anterior e o novo apontam para a mesma referência, se forem o mesmo objeto a renderização não acontece.
+
+Um outro detalhe é que o plugin Redux DevTools, que nos possibilita debugar a aplicação em uma ordem cronológica, espera que navegar entre as actions não altere nada mais além do estado. Efeitos colaterais como objetos mutáveis podem causar comportamentos distintos ao repetir as actions.
+
+O ImmutableJS possui várias estruturas de objetos imutáveis para encapsular o estado (List, Map, Set, etc...), além de diversos métodos para manipulação, incluindo ordenação, filtros e agrupamento dos dados.
+
+Para utilizar a biblioteca precisamos alterar o objeto do estado inicial, o reducer e o `mapStateToProps` do componente.
+
+No arquivo `src\store\ducks\cards.js`:
+
+````JavaScript
+import { fromJS, List } from 'immutable';
+
+/** ********************************
+ * STATE
+ ******************************** */
+const INITIAL_STATE = fromJS({
+  cards: [],
+  loading: false,
+  error: false,
+});
+
+...
+
+/** ********************************
+ * REDUCER
+ ******************************** */
+
+export const reducer = handleActions({
+  [cards.fetchCards.request](state) {
+    return state
+      .set('loading', true)
+      .set('error', false);
+  },
+  [cards.fetchCards.success](state, { payload }) {
+    return state
+      .set('cards', List(payload))
+      .set('loading', false)
+      .set('error', false);
+  },
+  [cards.fetchCards.failure](state) {
+    return state
+      .set('cards', [])
+      .set('loading', false)
+      .set('error', true);
+  },
+}, INITIAL_STATE);
+````
+
+O método `fromJS` converte objetos para a estrutura Map e arrays para List, em seguida devemos alterar o reducer para usar o método `set`, pois para manipular o estado agora precisamos usar os métodos do immutable. O primeiro parâmetro é a key do objeto que queremos alterar e o segundo é o valor.
+
+Precisamos alterar também o `mapStateToProps` no componente. Devemos usar o método `get` para obter o valor baseado na key do objeto.
+
+````JavaScript
+const mapStateToProps = (state) => ({
+  loading: state.get('loading'),
+  error: state.get('error'),
+  cards: state.get('cards'),
+});
+
+...
+````
+
+Com essas alterações temos a garantia da imutabilidade para o estado, prevenindo erros e garantindo performance.
+
+O código completo deste passo está no commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/279a3c5e40c49b9223e9af3fb5389ccdb2626669 
+
+## Adicionando selectors memoizados
+
+Vamos alterar o nosso duck `src\store\ducks\cards.js` para incluir os selectors:
+
+````JavaScript
+import { createSelector } from 'reselect';
+
+/** ********************************
+ * SELECTORS
+ ******************************** */
+
+export const makeSelectCards = createSelector((state) => state.get('cards'), (substate) => substate.toJS());
+export const makeSelectLoading = createSelector((state) => state.get('loading'), (bool) => bool);
+export const makeSelectError = createSelector((state) => state.get('error'), (bool) => bool);
+
+````
+
+O método `createSelector` recebe como primeiro argumento o selector e o segundo é o resultado da expressão.
+
+Devemos alterar também o `mapStateToProps` do componente para usar o novo selector:
+
+````JavaScript
+... 
+
+// Precisamos importar os selectors criados
+import { makeSelectLoading, makeSelectCards, makeSelectError } from './store/ducks/cards';
+import { createStructuredSelector } from 'reselect';
+
+const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading,
+  error: makeSelectError,
+  cards: makeSelectCards,
+});	});
+
+...
+````
+
+A função `createStructuredSelector` agrupa os selectors em um objeto único para ser repassado ao `connect` do react-redux.
+
+# Material para estudo e referências
+
+Nem todos os termos foram explicados, pois o objetivo era tornar compreensível o funcionamento e o fluxo de uma aplicação construída com ReactJS + Redux (e helpers), então, alguns detalhes e minúcias de algumas bibliotecas foram deixados de fora.
+
+Abaixo estão todas as referências utilizadas para a construção deste documento:
+
+- [Documentação ReactJS](https://reactjs.org/)
+- [Documentação Arquitetura Flux](https://github.com/facebook/flux/tree/master/examples)
+- [Documentação Redux](https://redux.js.org/)
+- [Documentação React-Redux](https://react-redux.js.org/)
+- [Documentação Redux-Thunk](https://github.com/reduxjs/redux-thunk)
+- [Documentação Redux-Saga](https://redux-saga.js.org/docs/api/)
+- [Documentação Redux-Actions](https://github.com/redux-utilities/redux-actions)
+- [Documentação ImmutableJS](https://github.com/immutable-js/immutable-js)
+- [Documentação Reselect](https://github.com/reduxjs/reselect)
+- [FSA (Flux Standard Action)](https://github.com/redux-utilities/flux-standard-action)
+- [Ducks Proposal](https://github.com/erikras/ducks-modular-redux)
+- [Understanding Generators in ES6 Javascript with Examples](
+https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
+- [Pros and Cons of Using Immutability with ReactJS](https://reactkungfu.com/2015/08/pros-and-cons-of-using-immutability-with-react-js/)
+- [What's a Redux Selector](https://medium.com/@matthew.holman/what-is-a-redux-selector-a517acee1fe8)
+
+Algumas sugestões de conteúdo nacional:
+
+- Rocketseat: [blog](https://blog.rocketseat.com.br/) ou [youtube](https://www.youtube.com/channel/UCSfwM5u0Kce6Cce8_S72olg)
+- Front-end Brasil: [github](https://github.com/frontendbr)
+- Fernando Daciuk: [twitter](https://twitter.com/fdaciuk) ou [site](https://blog.da2k.com.br/)
+- Felipe Fialho: [blog](https://www.felipefialho.com/)
+
+# Melhorias (TODO)
+
+O foco da aplicação era demonstrar as bibliotecas do ecossistema flux/redux, logo algumas features não foram implementadas. Existem melhorias e correções que podem ser desenvolvidas para aprimorar a experiência de uso.
+
+- [ ] Paginação;
+- [ ] Ajustar interpretação de request direto pela url;
+- [ ] Implementar página 404;
+- [ ] Layout responsivo
