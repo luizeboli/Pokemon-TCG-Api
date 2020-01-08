@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 import { createActions, handleActions } from 'redux-actions';
 import {
   call, delay, put, takeLatest,

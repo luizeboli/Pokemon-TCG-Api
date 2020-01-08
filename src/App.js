@@ -13,9 +13,9 @@ import {
 import GlobalStyle from './styles/global';
 
 
-function App({
+const App = ({
   loading, cards, fetchCards,
-}) {
+}) => {
   useEffect(() => {
     fetchCards();
   }, []);
@@ -34,7 +34,7 @@ function App({
       <BackToTop />
     </Router>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading,
