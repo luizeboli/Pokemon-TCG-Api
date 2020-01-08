@@ -40,7 +40,7 @@ export const reducer = handleActions({
   },
   [cards.fetchCards.success](state, { payload }) {
     return state
-      .set('cards', List(payload))
+      .set('cards', payload)
       .set('loading', false)
       .set('error', false);
   },
@@ -79,6 +79,6 @@ export function* saga() {
  * SELECTORS
  ******************************** */
 
-export const makeSelectCards = createSelector((state) => state.get('cards'), (substate) => substate.toJS());
+export const makeSelectCards = createSelector((state) => state.get('cards'), (substate) => substate);
 export const makeSelectLoading = createSelector((state) => state.get('loading'), (bool) => bool);
 export const makeSelectError = createSelector((state) => state.get('error'), (bool) => bool);
