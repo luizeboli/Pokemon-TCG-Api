@@ -3,6 +3,8 @@
 
 Aplicação desenvolvida em ReactJS consumindo a API https://pokemontcg.io/
 
+[Live preview](http://poke-tcg-api.herokuapp.com/)
+
 # Instalação e Execução
 
 1. Faça um clone desse repositório: `git clone https://github.com/luizeboli/Pokemon-TCG-Api.git`;
@@ -752,7 +754,7 @@ Para utilizar a biblioteca precisamos alterar o objeto do estado inicial, o redu
 No arquivo `src\store\ducks\cards.js`:
 
 ````JavaScript
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 
 /** ********************************
  * STATE
@@ -777,7 +779,7 @@ export const reducer = handleActions({
   },
   [cards.fetchCards.success](state, { payload }) {
     return state
-      .set('cards', List(payload))
+      .set('cards', payload)
       .set('loading', false)
       .set('error', false);
   },
