@@ -878,6 +878,8 @@ Algumas sugestões de conteúdo nacional:
 - Fernando Daciuk: [twitter](https://twitter.com/fdaciuk) ou [site](https://blog.da2k.com.br/)
 - Felipe Fialho: [blog](https://www.felipefialho.com/)
 
+Recentemente, [Mark Erikson](https://github.com/markerikson), um dos mantenedores do Redux, escreveu um guia de boas práticas para se utilizar a biblioteca. O material é vasto, com exemplos e explicações detalhadas: [Redux Style Guide](https://redux.js.org/style-guide/style-guide/#structure-files-as-feature-folders-or-ducks).
+
 # Melhorias (TODO)
 
 O foco da aplicação era demonstrar as bibliotecas do ecossistema flux/redux, logo algumas features não foram implementadas. Existem melhorias e correções que podem ser desenvolvidas para aprimorar a experiência de uso.
