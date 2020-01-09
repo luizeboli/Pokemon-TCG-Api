@@ -66,9 +66,7 @@ Flux é um padrão/arquitetura de código trazido pelo Facebook para desenvolvim
 
 ### **Action**
 
-Uma action é nada mais que um objeto, que por convenção contém duas propriedades: **type** e **payload**.
-
-A propriedade type é única e distingue qual ação está sendo executada, enquanto o payload armazena os dados que serão usados para manipular o estado.
+Uma action é nada mais que um objeto, que obrigatoriamente deve conter a propriedade **type** para distinguir qual ação está sendo executada. A action também deve possuir uma propriedade que armazena os dados usados pelo reducer para manipular o estado, esta segunda por convenção é nomeada **payload**.
 
 Exemplo:
 
@@ -455,7 +453,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchCards }, disp
 
 Nossa aplicação está finalizada e funcional, com todo o fluxo coberto, inclusive utilizando thunk para efetuar requisições assíncronas.
 
-O código completo até este passo, pode ser visualizado no commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/f970b81fb5844c3859f568d7cd72bcf2e1e4bbdf .
+O código completo até este passo, pode ser visualizado no commit [#f970b81](https://github.com/luizeboli/Pokemon-TCG-Api/commit/f970b81fb5844c3859f568d7cd72bcf2e1e4bbdf).
 
 As próximas bibliotecas resolvem problemas específicos e não são obrigatórias, principalmente para projetos pequenos como esse.
 
@@ -551,7 +549,7 @@ export const reducer = (state = INITIAL_STATE, action) => {
 
 Percebe-se que na prática o código continua o mesmo, a diferença é que agora o módulo  cards está centralizado em um único arquivo, facilitando a manutenção. Claro que também é necessário corrigir o "import" dos componentes para referenciar o novo arquivo. 
 
-O código completo desta etapa está no commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/c1707b8506f80efb83318c4317b7ec2a13c75f7d .
+O código completo desta etapa está no commit [#c1707b8](https://github.com/luizeboli/Pokemon-TCG-Api/commit/c1707b8506f80efb83318c4317b7ec2a13c75f7d).
 
 ## Simplificando as actions e reducers
 
@@ -631,7 +629,7 @@ O método `createActions` nos permite manipular a forma que o payload é enviado
 
 Usamos o método `handleActions` para tratar as actions, o primeiro parâmetro é o reducer, onde cada função se refere a uma action específica, e o segundo é o estado inicial.
 
-O código completo deste passo está no commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/3547fff41032cd771953d5a878879c583a23504d .
+O código completo deste passo está no commit [#3547fff](https://github.com/luizeboli/Pokemon-TCG-Api/commit/3547fff41032cd771953d5a878879c583a23504d).
 
 
 ## Outro exemplo de middleware (Redux Saga)
@@ -737,7 +735,7 @@ export default store;
 
 Não precisamos alterar nosso componente que deve continuar funcionando.
 
-O commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/3547fff41032cd771953d5a878879c583a23504d contém o código completo desta etapa.'
+O commit [#3547fff](https://github.com/luizeboli/Pokemon-TCG-Api/commit/3547fff41032cd771953d5a878879c583a23504d) contém o código completo desta etapa.'
 
 ## Imutabilidade com ImmutableJS no Redux
 
@@ -808,7 +806,7 @@ const mapStateToProps = (state) => ({
 
 Com essas alterações temos a garantia da imutabilidade para o estado, prevenindo erros e garantindo performance.
 
-O código completo deste passo está no commit https://github.com/luizeboli/Pokemon-TCG-Api/commit/279a3c5e40c49b9223e9af3fb5389ccdb2626669 
+O código completo deste passo está no commit [#279a3c5](https://github.com/luizeboli/Pokemon-TCG-Api/commit/279a3c5e40c49b9223e9af3fb5389ccdb2626669). 
 
 ## Adicionando selectors memoizados
 
@@ -848,6 +846,8 @@ const mapStateToProps = createStructuredSelector({
 ````
 
 A função `createStructuredSelector` agrupa os selectors em um objeto único para ser repassado ao `connect` do react-redux.
+
+Todo o código desta etapa está no commit [#9ca22d5](https://github.com/luizeboli/Pokemon-TCG-Api/commit/9ca22d5e97b00263215224458071d303bbeb661a).
 
 # Material para estudo e referências
 
